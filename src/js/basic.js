@@ -1,9 +1,19 @@
 export default class Validator {
-  static valdateUsername(oldName) {
-    const re1 = /([^\w-]+)/;
-    const re2 = /^[\d-_]+|[\d-_]$|(\d{3,})/;
-    if ((!re1.test(oldName) && (!re2.test(oldName)))) {
-      return oldName;
-    } throw new Error('Invalid name');
+  static valdateUserPhone(oldPhone) {
+    const re1 = /\d/g;
+    const re2 = /\D(?= )?/g;
+    const res1 = oldPhone.match(re1);
+    const res2 = oldPhone.match(re2);
+    let newPhone = '';
+    if (res2[0] === ' ') {
+      res1.shift();
+      res1.unshift('+7');
+      newPhone = res1.join('');
+    }
+    if (res2[0] === '+') {
+      res1.unshift('+');
+      newPhone = res1.join('');
+    }
+    return newPhone;
   }
 }
